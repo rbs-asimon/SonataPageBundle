@@ -114,8 +114,11 @@ class RoutePageGenerator
                 $routesDedupInfos[$routePath] = array(trim($name), $route);
             }
         }
+        // We sort the routeInfos to be able to manage parent-child relationship based on path
+        ksort($routesDedupInfos);
+        $pagesWithFolder = array();
 
-        foreach ($routesDedupInfos as $routeInfo) {
+        foreach ($routesDedupInfos as $routePath => $routeInfo) {
             list($name, $route) = $routeInfo;
             $knowRoutes[] = $name;
 
@@ -158,7 +161,15 @@ class RoutePageGenerator
             }
 
             if (!$page->getParent() && $page->getId() != $root->getId()) {
-                $page->setParent($root);
+                $parentPage = null;
+                foreach ($pagesWithFolder as $pageWithFolder) {
+                    list($otherPage, $folder) = $pageWithFolder;
+                    if (strpos($routePath, $folder) === 0) {
+                        $parentPage = $otherPage;
+                        break;
+                    }
+                }
+                $page->setParent($parentPage !== null ? $parentPage : $root);
             }
 
             $page->setSlug($route->getPath());
@@ -166,6 +177,9 @@ class RoutePageGenerator
             $page->setRequestMethod(isset($requirements['_method']) ? $requirements['_method'] : 'GET|POST|HEAD|DELETE|PUT');
 
             $this->pageManager->save($page);
+            
+            $routeFolder = ($routePath[strlen($routePath)-1] == '/') ? $routePath : $routePath.'/';
+            array_unshift($pagesWithFolder, array($page, $routeFolder));
 
             $this->writeln($output, sprintf('  <info>%s</info> % -50s %s', $update ? 'UPDATE ' : 'CREATE ', $name, $route->getPath()));
         }
