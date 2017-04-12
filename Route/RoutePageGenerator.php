@@ -95,7 +95,7 @@ class RoutePageGenerator
                 'slug' => '/',
             ));
 
-            $this->pageManager->save($root);
+            $this->pageManager->save($root, false);
         }
 
         // Iterate over declared routes from the routing mechanism
@@ -176,7 +176,7 @@ class RoutePageGenerator
             $page->setUrl($route->getPath());
             $page->setRequestMethod(isset($requirements['_method']) ? $requirements['_method'] : 'GET|POST|HEAD|DELETE|PUT');
 
-            $this->pageManager->save($page);
+            $this->pageManager->save($page, false);
             
             $routeFolder = ($routePath[strlen($routePath)-1] == '/') ? $routePath : $routePath.'/';
             array_unshift($pagesWithFolder, array($page, $routeFolder));
@@ -210,8 +210,10 @@ class RoutePageGenerator
 
             // an internal page or an error page should not have any parent (no direct access)
             $page->setParent(null);
-            $this->pageManager->save($page);
+            $this->pageManager->save($page, false);
         }
+        
+        $this->pageManager->getEntityManager()->flush();
 
         $has = false;
 
