@@ -1,5 +1,5 @@
 <!--
-    Before you open an issue, make sure this one does not already exists.
+    Before you open an issue, make sure this one does not already exist.
     Please also read the "guidelines for contributing" link above before posting.
 -->
 
@@ -12,21 +12,21 @@
 
 #### Sonata packages
 
-```bash
-$ composer show sonata-project/*
+```
+$ composer show --latest 'sonata-project/*'
 # Put the result here.
 ```
 
 #### Symfony packages
 
-```bash
-$ composer show symfony/*
+```
+$ composer show --latest 'symfony/*'
 # Put the result here.
 ```
 
 #### PHP version
 
-```bash
+```
 $ php -v
 # Put the result here.
 ```

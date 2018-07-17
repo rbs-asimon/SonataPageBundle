@@ -2,6 +2,168 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.9.0](https://github.com/sonata-project/SonataPageBundle/compare/3.8.0...3.9.0) - 2018-06-18
+### Changed
+- Auto-register datepicker form theme
+- Force use breadcrumb translation strings for page admins
+
+### Fixed
+- Removed default value for parent association mappings
+- `addChild` deprecations
+- Only blocks with getBlockMetadata method will be shown in "add block of type" menu of Page Composer
+
+### Added
+- Added support for latest `sonata-project/cache`
+
+## [3.8.0](https://github.com/sonata-project/SonataPageBundle/compare/3.7.1...3.8.0) - 2018-02-23
+### Added
+- added block title translation domain option
+- added block icon option
+- added block class option
+- Added auto-registration sonata.page.router to cmf_routing.router service
+
+### Changed
+- Switch all templates references to Twig namespaced syntax
+- Switch from templating service to sonata.templating
+- Remove default template from exception list
+- Use default template in page create template
+- Added styling to page create button
+- Allow Slugify ^3.0
+
+### Fixed
+- Replaced service names for field types by classnames.
+- Commands not working on symfony4
+- sonata.page.site.selector is public
+- forward-compatibility with strict mode
+
+### Removed
+- Removed default title from blocks
+- Removed old `sonata-` classes from templates
+- Removed compatibility with older versions of FOSRestBundle (<2.1)
+
+## [3.7.1](https://github.com/sonata-project/SonataPageBundle/compare/3.7.0...3.7.1) - 2018-01-07
+### Changed
+- The internal page name is not used as a seo title fallback anymore
+- make services explicit public
+ 
+### Fixed
+- Fix for getRuntime on Symfony older than 3.4
+- Fixed missing import
+- Lowered page request listener to make sure it's triggered behind the firewall listener
+- Fixed template choices in BlockAdmin
+
+## [3.7.0](https://github.com/sonata-project/SonataPageBundle/compare/3.6.0...3.7.0) - 2017-12-12
+### Added
+- Added Russian translations
+- Add Symfony 4 compatibility
+- Added new configuration `skip_redirection` to skip asking Editor to redirect
+
+### Changed
+- make services explicit public
+
+### Fixed
+- compatibility with Twig 2.0 was improved
+- Fixed wrong route in pagelist block
+
+### Removed
+- Removed old form alias usage
+
+## [3.6.0](https://github.com/sonata-project/SonataPageBundle/compare/3.5.2...3.6.0) - 2017-11-14
+### Fixed
+- use new sf3 choices structure
+- Pass form data instead of request object to form::submit
+- Not working SEO page title
+- read_only error for site selection in page admin
+- Renamed internal method to fix sf2.8 incompatibility
+- Fixed passing snapshot factory as wrong argument to `Sonata\PageBundle\Entity\SnapshotManager`
+- Unused `no-confirmation` option for site create command
+
+### Removed
+- support for old versions of php and Symfony
+- Removed php5 version checks
+
+## [3.5.2](https://github.com/sonata-project/SonataPageBundle/compare/3.5.1...3.5.2) - 2017-09-14
+### Changed
+- Changed fallback translation domain to `SonataBlockBundle` in page composer
+
+### Fixed
+- Batch blocks removing doesn't mark page as edited
+- Composer (JS): Relying of custom status-property; instead rely on Response Status Code
+- use `configureSettings` instead of deprecated `setDefaultSettings`
+- compatibility with Twig 2.0 was improved
+- ``_self`` returns the template path instead of the template object
+- Twig runtime error on Symfony < 3.2 and Twig 2.x
+- Don't call Extension::addClassesToCompile() on php versions greater than 7
+
+## [3.5.1](https://github.com/sonata-project/SonataPageBundle/compare/3.5.0...3.5.1) - 2017-07-05
+### Fixed
+- use FQCN for Symfony 3 for `type` in `PageAdmin`
+- parent page select input no longer has flipped choices
+- crash when running `sonata:page:clone-site`
+- form typess are referenced by FQCN and not by name, which is no longer supported
+
+## [3.5.0](https://github.com/sonata-project/SonataPageBundle/compare/3.4.1...3.5.0) - 2017-06-05
+### Added
+- added support for `FOSRestBundle:2.0`
+- Added Italian translations
+
+### Fixed
+- Rendering failure when block.page property does not exist.
+- Fixed hardcoded paths to classes in `.xml.skeleton` files of config
+- Compatibility with Symfony 3 was fixed
+- A deprecation warning regarding the usage of factories in the DIC was fixed
+- deprecation warning about scope attributes
+- deprecation error message about `addViolationAt`
+- added support for both `QuestionHelper` and `DialogHelper` in `CreateSiteCommand` for Symfony 2.3 and 3.x compatibility
+- fixed token manager compatibility in `PageAdminController`
+- fixed the syntax change necessary for question helper as opposed to dialog helper
+
+## [3.4.1](https://github.com/sonata-project/SonataPageBundle/compare/3.4.0...3.4.1) - 2017-04-04
+### Deprecated
+- Removed block service deprecation
+
+### Fixed
+- use `is not null` instead of `is defined` in `Block/block_base.html.twig`
+
+## [3.4.0](https://github.com/sonata-project/SonataPageBundle/compare/3.3.0...3.4.0) - 2017-03-16
+### Added
+- Added --clean option to `sonata:page:update-core-routes` command to remove orphaned pages
+
+### Fixed
+- Configuration regex for `ignore_route_patterns` and `ignore_uri_patterns` nodes
+- ISO 639 compatibility, `Site::$locale`, now has length set as 7 instead of 6.
+- Add relative path to the "view page" link in the `PageAdmin`
+- deprecated usage of the logger
+- deprecated usage `configureSideMenu`
+
+### Changed
+- `CmsManagerSelector` now uses the `PageAdmin::isGranted` method to check for EDIT
+- Route name from `admin_sonata_page_page_create` to method `sonata_admin.url()`.
+- `Sonata\PageBundle\Admin\PageAdmin`, added method `getPersistentParameters`
+- use font awesome icon instead of famfamfam icon in `select_site.html.twig`
+
+### Deprecated
+- Deprecated unused `--all` option in `sonata:page:update-core-routes` command
+- Removed deprecation for `security.context`
+
+## [3.3.0](https://github.com/sonata-project/SonataPageBundle/compare/3.2.0...3.3.0) - 2017-01-17
+### Added
+- Added new `sonata:page:clone` command
+- Added `SiteRequestContextInterface` to check the current context type in get SiteRequestContext
+- Added `SiteRequestContext::setSite()` to change the site context
+- Added `SiteRequestContext::getSite()` to get the site context
+
+### Changed
+- Changed `CmsPageRouter::generateFromPage` to change the site context when generating the url for the given page
+
+### Fixed
+- Failed to create object: AppBundle\Entity\Site
+- NotNull constraint on `Page` instead of `Site`
+- Fixed `inherits_containers` feature Subject
+- Missing `blockId` setting SharedBlockBlockService
+- Use the correct protocol for urls
+- The page title won't get overwritten anymore
+
 ## [3.2.0](https://github.com/sonata-project/SonataPageBundle/compare/3.1.0...3.2.0) - 2016-09-20
 ### Added
 - Added new command to create block container for all pages
