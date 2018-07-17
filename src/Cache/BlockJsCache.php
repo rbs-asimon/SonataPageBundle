@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Sonata\Cache\CacheElementInterface;
 
 /**
  * Cache a block through a Javascript code.
@@ -73,7 +74,7 @@ class BlockJsCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function flushAll()
+    public function flushAll(): bool
     {
         return true;
     }
@@ -81,7 +82,7 @@ class BlockJsCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function flush(array $keys = [])
+    public function flush(array $keys = []): bool
     {
         return true;
     }
@@ -89,7 +90,7 @@ class BlockJsCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function has(array $keys)
+    public function has(array $keys): bool
     {
         return true;
     }
@@ -97,7 +98,7 @@ class BlockJsCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function get(array $keys)
+    public function get(array $keys): CacheElementInterface
     {
         $this->validateKeys($keys);
 
@@ -107,7 +108,7 @@ class BlockJsCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function set(array $keys, $data, $ttl = CacheElement::DAY, array $contextualKeys = [])
+    public function set(array $keys, $value, int $ttl = CacheElement::DAY, array $contextualKeys = []): CacheElementInterface
     {
         $this->validateKeys($keys);
 
@@ -169,7 +170,7 @@ class BlockJsCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function isContextual()
+    public function isContextual(): bool
     {
         return false;
     }

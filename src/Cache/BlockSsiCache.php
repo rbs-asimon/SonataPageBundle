@@ -22,6 +22,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Sonata\Cache\CacheElementInterface;
 
 /**
  * Cache block through an ssi statement.
@@ -64,7 +65,7 @@ class BlockSsiCache extends SsiCache
     /**
      * {@inheritdoc}
      */
-    public function get(array $keys)
+    public function get(array $keys): CacheElementInterface
     {
         $this->validateKeys($keys);
 
@@ -78,7 +79,7 @@ class BlockSsiCache extends SsiCache
     /**
      * {@inheritdoc}
      */
-    public function set(array $keys, $data, $ttl = CacheElement::DAY, array $contextualKeys = [])
+    public function set(array $keys, $value, int $ttl = CacheElement::DAY, array $contextualKeys = []): CacheElementInterface
     {
         $this->validateKeys($keys);
 
